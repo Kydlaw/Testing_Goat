@@ -1,12 +1,7 @@
 from selenium import webdriver
 import unittest
 
-browser = webdriver.Firefox()
-browser.get('http://localhost:8000')
 
-assert 'Django' in browser.title
-
-""" 
 class NewVisitor(unittest.TestCase):
     def setUp(self):
         self.browser = webdriver.Firefox()
@@ -20,8 +15,8 @@ class NewVisitor(unittest.TestCase):
         self.browser.get("http://localhost:8000")
 
         # Y a marqué "Todo list" dans le titre
-        self.assertIn('To-Do', self.browser.title)
-        self.fail('Finish the test!')
+        self.assertIn("To-Do", self.browser.title)
+        self.fail("Finish the test!")
 
         # On l'invite à rentrer un todo dans un champ de texte
 
@@ -43,5 +38,4 @@ class NewVisitor(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main() """
-
+    unittest.main()
