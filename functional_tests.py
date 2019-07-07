@@ -24,6 +24,7 @@ class NewVisitor(unittest.TestCase):
         # On l'invite à rentrer un todo dans un champ de texte
         inputbox = self.browser.find_element_by_id("id_new_item")
         self.assertEqual(inputbox.get_attribute("placeholder"), "Enter a to-do item")
+
         # Elle saisit "Me faire foutre" dans une text box
         inputbox.send_keys("Buy peacok feathers")
 
@@ -33,8 +34,11 @@ class NewVisitor(unittest.TestCase):
         time.sleep(1)
 
         table = self.browser.find_element_by_id("id_list_table")
-        rows = table.find_element_by_tag_name("tr")
-        self.assertTrue(any(row.text == "1: Buy peacock feathers" for row in rows))
+        rows = table.find_elements_by_tag_name("tr")
+        self.assertTrue(
+            any(row.text == "1: Buy peacock feathers" for row in rows),
+            "New to-do item did not appear in table",
+        )
 
         # Il y a toujours un champ texte qui lui permet d'ajhouter des éléments à sa liste
         # Elle saisit "Aller dormir"
