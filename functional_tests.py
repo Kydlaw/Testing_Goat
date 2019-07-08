@@ -26,7 +26,7 @@ class NewVisitor(unittest.TestCase):
         self.assertEqual(inputbox.get_attribute("placeholder"), "Enter a to-do item")
 
         # Elle saisit "Me faire foutre" dans une text box
-        inputbox.send_keys("Buy peacok feathers")
+        inputbox.send_keys("Buy peacock feathers")
 
         # Quand elle appuie sur entrée, la page se met à jour et la page affiche sa liste d'items
         # "1: Aller me faire foutre" comme item dans un table de to do list
@@ -35,18 +35,24 @@ class NewVisitor(unittest.TestCase):
 
         table = self.browser.find_element_by_id("id_list_table")
         rows = table.find_elements_by_tag_name("tr")
-        self.assertTrue(
-            any(row.text == "1: Buy peacock feathers" for row in rows),
-            "New to-do item did not appear in table",
-        )
+        self.assertIn("1: Buy peacock feathers", [row.text for row in rows])
 
         # Il y a toujours un champ texte qui lui permet d'ajhouter des éléments à sa liste
         # Elle saisit "Aller dormir"
-        self.fail("Finish the test!")
+        table = self.browser.find_element_by_id("id_list_table")
+        inputbox.send_keys("Manger ses morts")
+        inputbox.send_keys(Keys.ENTER)
+        time.sleep(1)
 
         # La page se met de nouveau à jour et affiche tous ses éléments
+        table = self.browser.find_element_by_id("id_list_table")
+        rows = table.find_elements_by_tag_name("tr")
+        self.assertIn("1: Buy peacock feathers", [row.text for row in rows])
+        self.assertIn("2: Manger ses morts", [row.text for row in rows])
 
         # Elle se demande si le site se souviendra de sa liste quand elle va la quitter.
+        self.fail("Finish the test!")
+
         # Elle s'aperçoit qu'on lui propose un URL perso pour se rendre sur son site.
 
         # Elle visite cette URL et retrouve sa liste.
